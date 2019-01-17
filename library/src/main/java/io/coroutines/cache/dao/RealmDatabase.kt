@@ -5,15 +5,15 @@ import io.realm.Realm
 import io.realm.RealmConfiguration
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
-import java.util.*
+import java.util.Date
 
-class RealmDatabase(var context: Context) {
+class RealmDatabase(private val context: Context) {
 
     fun initDatabase() {
         Realm.init(context)
 
         val realmConfiguration = RealmConfiguration.Builder()
-            .name(context.packageName+CACHE_PREFIX)
+            .name(context.packageName + CACHE_PREFIX)
             .schemaVersion(VERSION)
             .deleteRealmIfMigrationNeeded()
             .build()
@@ -30,18 +30,4 @@ class RealmDatabase(var context: Context) {
         private const val CACHE_PREFIX = "cache"
     }
 
-}
-
-open class Cache constructor(): RealmObject(){
-
-    @PrimaryKey
-    var id:String = ""
-    var data:String = ""
-    var date:Date = Calendar.getInstance().time
-
-    constructor(id:String, data:String, date: Date) :this(){
-        this.id = id
-        this.data = data
-        this.date = date
-    }
 }
